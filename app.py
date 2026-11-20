@@ -33,7 +33,10 @@ def add_gate(op):
 def build(n, ops):
     c = Circuit(n)
     for name, *qs in ops:
-        c.cnot(*qs) if name == "CNOT" else getattr(c, name.lower())(*qs)
+        if name == "CNOT":
+            c.cnot(*qs)
+        else:
+            getattr(c, name.lower())(*qs)
     return c
 
 
@@ -76,7 +79,7 @@ st.subheader("1. Build a circuit")
 st.write("**Start from an example:**")
 cols = st.columns(len(PRESETS))
 for col, name in zip(cols, PRESETS):
-    col.button(name, on_click=load_preset, args=(name,), use_container_width=True)
+    col.button(name, on_click=load_preset, args=(name,), width="stretch")
 
 st.write("**Or add gates yourself:**")
 c1, c2, c3, c4 = st.columns([1.2, 1, 1, 1])
@@ -92,17 +95,17 @@ else:
     ok, op = True, (gate, q)
 c4.write("")
 c4.write("")
-c4.button("Add gate", on_click=add_gate, args=(op,), disabled=not ok, use_container_width=True)
+c4.button("Add gate", on_click=add_gate, args=(op,), disabled=not ok, width="stretch")
 if gate == "CNOT" and not ok:
     st.caption("CNOT needs two different qubits (so at least 2 qubits).")
 
 b1, b2, _ = st.columns([1, 1, 4])
 b1.button("Undo last", on_click=lambda: st.session_state.ops.pop() if st.session_state.ops else None,
-          disabled=not ops, use_container_width=True)
+          disabled=not ops, width="stretch")
 b2.button("Clear", on_click=lambda: st.session_state.ops.clear(),
-          disabled=not ops, use_container_width=True)
+          disabled=not ops, width="stretch")
 
-st.pyplot(draw_circuit(n, ops), use_container_width=False)
+st.pyplot(draw_circuit(n, ops), width="content")
 
 st.subheader("2. Results")
 if not ops:
@@ -118,7 +121,7 @@ else:
     left.bar_chart(df, y_label="Chance of this result", x_label="Result (qubit 0 on the left)")
     right.metric("Error", f"{error:.2f}", help="0 = same as perfect, 1 = completely different")
     right.button("Run again", on_click=lambda: st.session_state.update(run_id=st.session_state.run_id + 1),
-                 use_container_width=True)
+                 width="stretch")
     right.caption("Move the noise slider in the sidebar and watch the extra bars appear.")
 
     with st.expander("See how error grows with noise for this circuit"):
