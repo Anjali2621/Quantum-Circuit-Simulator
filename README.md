@@ -19,6 +19,7 @@ Run the tests with `pytest`.
 - https://quantum-circuit-simulator-2621.streamlit.app/
 
 ![App screenshot](screenshot.png)
+![App screenshots](screenshot2.png)
 
 ## How it works
 
