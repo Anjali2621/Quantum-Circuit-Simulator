@@ -18,7 +18,7 @@ Run the tests with `pytest`.
 ## Quantum Circuit Simulator Streamlit App Link
 - https://quantum-circuit-simulator-2621.streamlit.app/
 
-![App screenshot](screenshot.png,screenshot2.png)
+![App screenshot](screenshot.png)
 
 ## How it works
 
